@@ -22,9 +22,21 @@ require_once __DIR__ . '/config.php';
 $allowedOrigins = $CONFIG['cors']['allowed_origins'];
 $requestOrigin = $_SERVER['HTTP_ORIGIN'] ?? '';
 if ($requestOrigin !== '') {
+    // A browser never puts a trailing slash on an Origin header, but the value
+    // configured here gets copied out of an address bar, which always shows one.
+    // Matching strictly turns that into a silent, total failure: every call is
+    // blocked and the only clue is a response header that is not there.
+    // Normalise both sides instead - a trailing slash carries no meaning here.
+    $normaliseOrigin = function (string $origin): string {
+        return rtrim(trim($origin), '/');
+    };
     $isAllowed = $allowedOrigins === '*'
         ? (bool) preg_match('#^https?://(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$#', $requestOrigin)
-        : in_array($requestOrigin, array_map('trim', explode(',', $allowedOrigins)), true);
+        : in_array(
+            $normaliseOrigin($requestOrigin),
+            array_map($normaliseOrigin, explode(',', $allowedOrigins)),
+            true
+        );
     if ($isAllowed) {
         header('Access-Control-Allow-Origin: ' . $requestOrigin);
         header('Access-Control-Allow-Credentials: true');
