@@ -1,0 +1,357 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Palette lives in tailwind.config.js. These mirror the few steps that plain
+   CSS below needs (gradients, shadows, scrollbars) — keep them in sync. */
+:root {
+  --background: #ffffff;
+  --foreground: #0C1A19;
+  --card: rgba(255, 255, 255, 0.9);
+  --card-border: rgba(20, 83, 79, 0.1);
+  --primary: #14534F;
+  --primary-strong: #0F403D;
+  --primary-glow: rgba(20, 83, 79, 0.15);
+  --accent: #8E631F;
+  --accent-glow: rgba(142, 99, 31, 0.12);
+  --dark: #0C1A19;
+
+  /* Motion, mirrored from tailwind.config.js so plain CSS below uses the same
+     two durations rather than inventing a third. */
+  --dur-fast: 120ms;
+  --dur-base: 220ms;
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  /* Keyboard focus was invisible everywhere: the app sets outline-none on its
+     inputs and relies on hover for buttons, so tabbing through a till left no
+     trace of where you were. One ring here covers every control instead of
+     being repeated on each one. :focus-visible keeps it off mouse clicks. */
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Press feedback for every button, in one place.
+     A touchscreen till has no cursor and no hover, so without a pressed state
+     the only confirmation a tap registered is the result arriving a beat later.
+     Doing this per component meant 6 buttons out of ~200 had it; doing it on the
+     element means every caller gets it and none can forget. Disabled controls
+     are excluded — they must not appear to respond. */
+  button:not(:disabled):not([aria-disabled='true']) {
+    transition: transform var(--dur-fast) var(--ease-out-soft);
+    /* Skips the browser's 300ms wait-and-see for a double-tap. On a till that
+       delay is the difference between the grid feeling responsive and broken. */
+    touch-action: manipulation;
+    /* Android paints its own translucent block over every tap target. The
+       pressed state above is the feedback; this stops the two competing. */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button:not(:disabled):not([aria-disabled='true']):active {
+    transform: scale(0.97);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    button:active {
+      transform: none;
+    }
+  }
+
+  /* The app animates on mount in several places and the decorative background
+     never stops. Honour the OS setting globally rather than per component. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  body {
+    @apply bg-white text-dark antialiased;
+    background-image:
+      radial-gradient(at 0% 0%, rgba(20, 83, 79, 0.035) 0, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(142, 99, 31, 0.025) 0, transparent 50%);
+    min-height: 100vh;
+  }
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@layer components {
+  .glass-card {
+    @apply backdrop-blur-xl bg-white border border-brand-100 shadow-2xl shadow-brand-900/[0.04];
+  }
+
+  /* Press feedback for anything a finger lands on.
+     A touchscreen till has no cursor and no hover, so without a pressed state
+     the only confirmation that a tap registered is the result arriving a beat
+     later. The scale is small on purpose — enough to feel, not enough to shift
+     what is under the finger. Paired with a shadow drop so it reads as the
+     surface going down, not just shrinking. */
+  .pressable {
+    @apply transition-[transform,box-shadow,border-color,background-color] duration-fast ease-out-soft;
+    @apply active:scale-[0.97] active:shadow-none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pressable {
+      @apply active:scale-100;
+    }
+  }
+
+  .premium-button {
+    @apply relative overflow-hidden transition-[transform,box-shadow,background-color] duration-base ease-out-soft active:scale-95 px-6 py-2.5 rounded-xl font-medium;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-strong) 100%);
+    box-shadow: 0 4px 15px -1px var(--primary-glow);
+    color: white;
+  }
+
+  .premium-button:hover {
+    @apply translate-y-[-2px] shadow-lg shadow-brand-700/25;
+    background: linear-gradient(135deg, #1A625D 0%, #14534F 100%);
+  }
+
+  .input-field {
+    @apply bg-brand-50/40 border border-brand-100 rounded-xl px-4 py-3 focus:ring-2 focus:ring-brand-600/10 focus:border-brand-600/25 outline-none transition-[border-color,box-shadow] duration-base ease-out-soft text-dark placeholder:text-brand-600;
+  }
+
+  .sidebar-link {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl transition-[color,background-color] duration-base ease-out-soft text-brand-400 hover:text-brand-700 hover:bg-brand-50;
+  }
+
+  /* Money. Proportional digits change width as they change value, so a column
+     of prices — and a running total counting up during a sale — jitters on
+     every change. A till is almost entirely numbers; this is where the rule
+     earns its keep. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Reaching the end of a modal's scroll must not start scrolling the page
+     behind it. */
+  .scroll-contain {
+    overscroll-behavior: contain;
+  }
+
+  .add-to-cart-animation {
+    @apply transition-transform duration-base ease-out-soft;
+    animation: addToCart 0.3s ease-in-out;
+  }
+
+  @keyframes addToCart {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  .sidebar-link.active {
+    @apply bg-brand-700 text-white border border-brand-800 shadow-lg shadow-brand-700/25;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(20, 83, 79, 0.14);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(20, 83, 79, 0.28);
+}
+
+/* Entry Animations */
+.animate-entry {
+  animation: entryFade 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes entryFade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stagger-item {
+  opacity: 0;
+  animation: entryFade 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Line-chart draw-in animation */
+@keyframes slcDraw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+.slc-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: slcDraw 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.slc-area {
+  opacity: 0;
+  animation: slcFade 0.9s ease forwards;
+}
+@keyframes slcFade {
+  to { opacity: 1; }
+}
+
+/* ── Sign-in brand panel (components/BrandPanel.tsx) ───────────────────
+   Only transform animates, so every layer stays on the compositor. The blur on
+   the pools is set once in the component and never animated — re-blurring each
+   frame is what makes this kind of backdrop stutter. */
+
+.aurora-pool {
+  animation-name: auroraDrift;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+@keyframes auroraDrift {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(5%, -7%, 0) scale(1.12); }
+  66% { transform: translate3d(-4%, 5%, 0) scale(0.93); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* Fine grid over the dark panel, masked so it fades before the edges. */
+.aurora-grid-dark {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 45%, #000 10%, transparent 72%);
+  mask-image: radial-gradient(ellipse 60% 50% at 50% 45%, #000 10%, transparent 72%);
+}
+
+/* ── Floating geometry ─────────────────────────────────────────────────
+   Two nested elements per shape: the outer one bobs, the inner one spins.
+   Splitting them means the two transforms never fight over the same property.
+   Per-shape timing and travel arrive as custom properties, so one pair of
+   keyframes drives every shape on the page. */
+
+.geo-float {
+  animation: geoFloat var(--geo-float-duration, 18s) cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  will-change: transform;
+}
+
+@keyframes geoFloat {
+  0%, 100% { transform: translate3d(0, calc(var(--geo-rise, 18px) * -1), 0); }
+  50% { transform: translate3d(var(--geo-sway, 10px), var(--geo-rise, 18px), 0); }
+}
+
+/* Products rock gently rather than rotating — a bottle turning a full circle
+   reads as broken, not decorative. */
+.geo-tilt {
+  animation: geoTilt var(--geo-tilt-duration, 16s) cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  will-change: transform;
+}
+
+.geo-tilt-reverse {
+  animation-direction: reverse;
+}
+
+@keyframes geoTilt {
+  0%, 100% { transform: rotate(var(--geo-tilt-from, -6deg)); }
+  50% { transform: rotate(var(--geo-tilt-to, 6deg)); }
+}
+
+/* A slow pulse for the concentric rings, so they breathe rather than just turn. */
+.geo-pulse {
+  animation: geoPulse var(--geo-pulse-duration, 12s) cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes geoPulse {
+  0%, 100% { transform: scale(1); opacity: var(--geo-pulse-min, 0.35); }
+  50% { transform: scale(1.08); opacity: var(--geo-pulse-max, 0.7); }
+}
+
+/* The mobile sign-in badge, hovering just off the form. */
+.floating-badge {
+  animation: badgeFloat 5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  will-change: transform;
+}
+
+@keyframes badgeFloat {
+  0%, 100% { transform: translate3d(0, -5px, 0); }
+  50% { transform: translate3d(0, 5px, 0); }
+}
+
+/* Respect a reduced-motion preference: entry, chart, cart and backdrop
+   animations are all decorative, so freeze them rather than moving anything.
+   The brand panel keeps its colour and simply stops drifting. */
+@media (prefers-reduced-motion: reduce) {
+  .aurora-pool,
+  .floating-badge,
+  .geo-float,
+  .geo-pulse {
+    animation: none !important;
+    transform: none;
+    will-change: auto;
+  }
+
+  /* Hold each item at its resting lean — without this every bottle snaps
+     bolt upright and the composition reads as a different design. */
+  .geo-tilt {
+    animation: none !important;
+    transform: rotate(var(--geo-tilt-from, -6deg));
+    will-change: auto;
+  }
+
+  .geo-pulse {
+    opacity: var(--geo-pulse-max, 0.7);
+  }
+
+  .animate-entry,
+  .stagger-item,
+  .slc-line,
+  .slc-area,
+  .add-to-cart-animation {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Compact typography on mobile/tablet — every section's text scales down on small
+   screens (Tailwind sizes are rem-based). Desktop (lg: 1024px and up) is untouched. */
+@media (max-width: 1023.98px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+/* Horizontal scroll strips (mobile action pills) with no visible scrollbar */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}

@@ -1,0 +1,35 @@
+# Render blueprint for the API.
+#
+# The frontend is NOT here: Next.js goes to Vercel, which serves it far better.
+# This deploys only the PHP backend.
+#
+# Read DEPLOYMENT.md before using this. The short version: Render's free plan
+# has no persistent disk, so the store resets whenever the container restarts.
+# That suits a demonstration and loses a real shop's takings.
+
+services:
+  - type: web
+    name: pos-api
+    runtime: docker
+    dockerfilePath: ./api/Dockerfile
+    dockerContext: .
+    plan: free
+    region: oregon
+    # Apache serves nothing at /, so point the check at a route that exists.
+    healthCheckPath: /api/health
+    envVars:
+      # Exact origin of the Vercel deployment. Without it the browser blocks
+      # every call from anywhere but localhost.
+      - key: ALLOWED_ORIGINS
+        sync: false
+      # Set explicitly. Left unset, a new key is generated on each container
+      # start and every signed-in till is logged out.
+      - key: TOKEN_SECRET
+        generateValue: true
+      # Chosen rather than generated, so the login is knowable for a demo.
+      - key: SEED_PASSWORD
+        sync: false
+      - key: APP_TIMEZONE
+        value: America/Chicago
+      - key: DEFAULT_GST_RATE
+        value: "8.25"

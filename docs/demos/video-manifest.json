@@ -1,0 +1,34 @@
+[
+  {
+    "slug": "01-product-overview",
+    "file": "docs/demos/videos/01-product-overview.mp4",
+    "seconds": 59.934958,
+    "kb": 1404,
+    "lines": 9,
+    "inRange": true
+  },
+  {
+    "slug": "02-primary-workflow",
+    "file": "docs/demos/videos/02-primary-workflow.mp4",
+    "seconds": 53.637,
+    "kb": 1097,
+    "lines": 10,
+    "inRange": true
+  },
+  {
+    "slug": "03-tax-automation",
+    "file": "docs/demos/videos/03-tax-automation.mp4",
+    "seconds": 49.239,
+    "kb": 1064,
+    "lines": 9,
+    "inRange": true
+  },
+  {
+    "slug": "04-business-value",
+    "file": "docs/demos/videos/04-business-value.mp4",
+    "seconds": 44.344,
+    "kb": 988,
+    "lines": 7,
+    "inRange": true
+  }
+]

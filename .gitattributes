@@ -1,0 +1,19 @@
+# Default: let git normalise text, and decide per file what the checkout looks like.
+* text=auto
+
+# These are read by Linux, inside a container, on a host nobody can SSH into.
+# A CRLF line ending here fails with "bad interpreter: /bin/sh^M", which is an
+# unpleasant thing to debug from a build log. The Dockerfile strips them as
+# well; this stops them ever being written in the first place.
+*.sh            text eol=lf
+Dockerfile      text eol=lf
+*.Dockerfile    text eol=lf
+.dockerignore   text eol=lf
+*.yaml          text eol=lf
+*.yml           text eol=lf
+
+# Demo media is already compressed; diffing or normalising it only causes churn.
+*.png  binary
+*.mp4  binary
+*.webm binary
+*.mp3  binary

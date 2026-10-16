@@ -1,0 +1,284 @@
+[
+  {
+    "slug": "01-sign-in",
+    "path": "/admin/login",
+    "name": "Sign in",
+    "purpose": "Authentication entry point; no credentials shown on screen",
+    "anon": true,
+    "viewport": "desktop",
+    "file": "docs/demos/screenshots/desktop/01-sign-in.png",
+    "px": "1680x1050",
+    "ok": true
+  },
+  {
+    "slug": "02-till",
+    "path": "/",
+    "name": "Till",
+    "purpose": "Product grid, basket, GST totals and payment selection",
+    "viewport": "desktop",
+    "file": "docs/demos/screenshots/desktop/02-till.png",
+    "px": "1680x1050",
+    "ok": true
+  },
+  {
+    "slug": "03-dashboard",
+    "path": "/admin",
+    "name": "Dashboard",
+    "purpose": "Takings, stock warnings and sales trend at a glance",
+    "viewport": "desktop",
+    "file": "docs/demos/screenshots/desktop/03-dashboard.png",
+    "px": "1680x1050",
+    "ok": true
+  },
+  {
+    "slug": "04-products",
+    "path": "/admin/products",
+    "name": "Products",
+    "purpose": "Catalogue with stock levels, search and CSV import/export",
+    "viewport": "desktop",
+    "file": "docs/demos/screenshots/desktop/04-products.png",
+    "px": "1680x1050",
+    "ok": true
+  },
+  {
+    "slug": "05-gst-tax",
+    "path": "/admin/tax",
+    "name": "GST & Tax",
+    "purpose": "Per-category GST rate the bill is calculated from",
+    "viewport": "desktop",
+    "file": "docs/demos/screenshots/desktop/05-gst-tax.png",
+    "px": "1680x1050",
+    "ok": true
+  },
+  {
+    "slug": "06-categories",
+    "path": "/admin/categories",
+    "name": "Categories",
+    "purpose": "Product divisions and their product counts",
+    "viewport": "desktop",
+    "file": "docs/demos/screenshots/desktop/06-categories.png",
+    "px": "1680x1050",
+    "ok": true
+  },
+  {
+    "slug": "07-sales-history",
+    "path": "/admin/sales",
+    "name": "Sales history",
+    "purpose": "Completed sales with per-sale GST breakdown",
+    "viewport": "desktop",
+    "file": "docs/demos/screenshots/desktop/07-sales-history.png",
+    "px": "1680x1050",
+    "ok": true
+  },
+  {
+    "slug": "08-customers",
+    "path": "/admin/customers",
+    "name": "Customers",
+    "purpose": "Customer records and loyalty balances",
+    "viewport": "desktop",
+    "file": "docs/demos/screenshots/desktop/08-customers.png",
+    "px": "1680x1050",
+    "ok": true
+  },
+  {
+    "slug": "09-suppliers",
+    "path": "/admin/suppliers",
+    "name": "Suppliers",
+    "purpose": "Supplier directory and ordering terms",
+    "viewport": "desktop",
+    "file": "docs/demos/screenshots/desktop/09-suppliers.png",
+    "px": "1680x1050",
+    "ok": true
+  },
+  {
+    "slug": "10-purchase-orders",
+    "path": "/admin/purchase-orders",
+    "name": "Purchase orders",
+    "purpose": "Restocking workflow from draft to received",
+    "viewport": "desktop",
+    "file": "docs/demos/screenshots/desktop/10-purchase-orders.png",
+    "px": "1680x1050",
+    "ok": true
+  },
+  {
+    "slug": "11-promotions",
+    "path": "/admin/promotions",
+    "name": "Promotions",
+    "purpose": "Percentage and fixed-amount discount rules",
+    "viewport": "desktop",
+    "file": "docs/demos/screenshots/desktop/11-promotions.png",
+    "px": "1680x1050",
+    "ok": true
+  },
+  {
+    "slug": "12-team",
+    "path": "/admin/users",
+    "name": "Team members",
+    "purpose": "Staff accounts and role assignment",
+    "viewport": "desktop",
+    "file": "docs/demos/screenshots/desktop/12-team.png",
+    "px": "1680x1050",
+    "ok": true
+  },
+  {
+    "slug": "13-audit-trail",
+    "path": "/admin/audit-logs",
+    "name": "Audit trail",
+    "purpose": "Owner-only record of sign-ins, sales and rate changes",
+    "viewport": "desktop",
+    "file": "docs/demos/screenshots/desktop/13-audit-trail.png",
+    "px": "1680x1050",
+    "ok": true
+  },
+  {
+    "slug": "14-shift-history",
+    "path": "/cashier/history",
+    "name": "Shift history",
+    "purpose": "A cashier reviewing and reprinting their own sales",
+    "viewport": "desktop",
+    "file": "docs/demos/screenshots/desktop/14-shift-history.png",
+    "px": "1680x1050",
+    "ok": true
+  },
+  {
+    "slug": "01-sign-in",
+    "path": "/admin/login",
+    "name": "Sign in",
+    "purpose": "Authentication entry point; no credentials shown on screen",
+    "anon": true,
+    "viewport": "mobile",
+    "file": "docs/demos/screenshots/mobile/01-sign-in.png",
+    "px": "780x1688",
+    "ok": true
+  },
+  {
+    "slug": "02-till",
+    "path": "/",
+    "name": "Till",
+    "purpose": "Product grid, basket, GST totals and payment selection",
+    "viewport": "mobile",
+    "file": "docs/demos/screenshots/mobile/02-till.png",
+    "px": "780x1688",
+    "ok": true
+  },
+  {
+    "slug": "03-dashboard",
+    "path": "/admin",
+    "name": "Dashboard",
+    "purpose": "Takings, stock warnings and sales trend at a glance",
+    "viewport": "mobile",
+    "file": "docs/demos/screenshots/mobile/03-dashboard.png",
+    "px": "780x1688",
+    "ok": true
+  },
+  {
+    "slug": "04-products",
+    "path": "/admin/products",
+    "name": "Products",
+    "purpose": "Catalogue with stock levels, search and CSV import/export",
+    "viewport": "mobile",
+    "file": "docs/demos/screenshots/mobile/04-products.png",
+    "px": "780x1688",
+    "ok": true
+  },
+  {
+    "slug": "05-gst-tax",
+    "path": "/admin/tax",
+    "name": "GST & Tax",
+    "purpose": "Per-category GST rate the bill is calculated from",
+    "viewport": "mobile",
+    "file": "docs/demos/screenshots/mobile/05-gst-tax.png",
+    "px": "780x1688",
+    "ok": true
+  },
+  {
+    "slug": "06-categories",
+    "path": "/admin/categories",
+    "name": "Categories",
+    "purpose": "Product divisions and their product counts",
+    "viewport": "mobile",
+    "file": "docs/demos/screenshots/mobile/06-categories.png",
+    "px": "780x1688",
+    "ok": true
+  },
+  {
+    "slug": "07-sales-history",
+    "path": "/admin/sales",
+    "name": "Sales history",
+    "purpose": "Completed sales with per-sale GST breakdown",
+    "viewport": "mobile",
+    "file": "docs/demos/screenshots/mobile/07-sales-history.png",
+    "px": "780x1688",
+    "ok": true
+  },
+  {
+    "slug": "08-customers",
+    "path": "/admin/customers",
+    "name": "Customers",
+    "purpose": "Customer records and loyalty balances",
+    "viewport": "mobile",
+    "file": "docs/demos/screenshots/mobile/08-customers.png",
+    "px": "780x1688",
+    "ok": true
+  },
+  {
+    "slug": "09-suppliers",
+    "path": "/admin/suppliers",
+    "name": "Suppliers",
+    "purpose": "Supplier directory and ordering terms",
+    "viewport": "mobile",
+    "file": "docs/demos/screenshots/mobile/09-suppliers.png",
+    "px": "780x1688",
+    "ok": true
+  },
+  {
+    "slug": "10-purchase-orders",
+    "path": "/admin/purchase-orders",
+    "name": "Purchase orders",
+    "purpose": "Restocking workflow from draft to received",
+    "viewport": "mobile",
+    "file": "docs/demos/screenshots/mobile/10-purchase-orders.png",
+    "px": "780x1688",
+    "ok": true
+  },
+  {
+    "slug": "11-promotions",
+    "path": "/admin/promotions",
+    "name": "Promotions",
+    "purpose": "Percentage and fixed-amount discount rules",
+    "viewport": "mobile",
+    "file": "docs/demos/screenshots/mobile/11-promotions.png",
+    "px": "780x1688",
+    "ok": true
+  },
+  {
+    "slug": "12-team",
+    "path": "/admin/users",
+    "name": "Team members",
+    "purpose": "Staff accounts and role assignment",
+    "viewport": "mobile",
+    "file": "docs/demos/screenshots/mobile/12-team.png",
+    "px": "780x1688",
+    "ok": true
+  },
+  {
+    "slug": "13-audit-trail",
+    "path": "/admin/audit-logs",
+    "name": "Audit trail",
+    "purpose": "Owner-only record of sign-ins, sales and rate changes",
+    "viewport": "mobile",
+    "file": "docs/demos/screenshots/mobile/13-audit-trail.png",
+    "px": "780x1688",
+    "ok": true
+  },
+  {
+    "slug": "14-shift-history",
+    "path": "/cashier/history",
+    "name": "Shift history",
+    "purpose": "A cashier reviewing and reprinting their own sales",
+    "viewport": "mobile",
+    "file": "docs/demos/screenshots/mobile/14-shift-history.png",
+    "px": "780x1688",
+    "ok": true
+  }
+]

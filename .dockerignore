@@ -1,0 +1,19 @@
+node_modules
+.next
+.git
+docs
+scripts
+app
+components
+lib
+public
+*.md
+
+# Never ship a real store, its write-ahead log, the generated signing key,
+# or the first-run password inside an image.
+api/data
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+.env
+.env.*

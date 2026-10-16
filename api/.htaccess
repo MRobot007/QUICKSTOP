@@ -1,0 +1,22 @@
+RewriteEngine On
+
+# The store itself — SQLite file, WAL sidecars, the generated token secret and
+# the first-run password. Apache serves any real file under this directory
+# before the rewrite below ever runs, so without this a plain GET for
+# /api/data/quickstop.sqlite downloads every password hash, sale and customer
+# record. Denied ahead of everything else.
+RedirectMatch 404 ^/.*/data/
+<FilesMatch "\.(sqlite|sqlite-shm|sqlite-wal|db|log|txt)$">
+  Require all denied
+</FilesMatch>
+# Dotfiles: .token_secret, .htaccess, editor leftovers.
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+
+# Pass Authorization header to PHP
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]
